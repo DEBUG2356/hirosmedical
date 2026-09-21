@@ -27,6 +27,7 @@ export default function Hero() {
 
   const { scrollY } = useScroll();
   const photoY = useTransform(scrollY, [0, 800], [0, 90]);
+  const bgY = useTransform(scrollY, [0, 800], [0, 120]);
   const textY = useTransform(scrollY, [0, 800], [0, -40]);
   const fade = useTransform(scrollY, [0, 500], [1, 0]);
 
@@ -40,7 +41,19 @@ export default function Hero() {
         my.set(((e.clientY - r.top) / r.height) * 2 - 1);
       }}
     >
-      {/* háttér */}
+      {/* háttér: halvány, parallaxos fotó + fehér átmenet a szöveg alatt */}
+      <motion.div aria-hidden style={{ y: bgY }} className="absolute -inset-y-16 inset-x-0 -z-20">
+        <Image
+          src="/img/site/gym-balls.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="scale-[1.04] object-cover object-center opacity-[0.3] blur-[2px] saturate-[0.8]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-ice via-ice/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ice/50 via-transparent to-ice" />
+      </motion.div>
       <div aria-hidden className="grid-dots absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_30%_20%,black,transparent_70%)]" />
       <div aria-hidden className="absolute -left-40 top-40 -z-10 h-[520px] w-[520px] rounded-full bg-green/15 blur-3xl" />
       <div aria-hidden className="absolute -right-24 -top-24 -z-10 h-[480px] w-[480px] rounded-full bg-sky/10 blur-3xl" />
